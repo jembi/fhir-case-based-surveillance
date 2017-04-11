@@ -1,0 +1,47 @@
+{
+  "resourceType": "DocumentReference",
+  "masterIdentifier": {
+    "system": "urn:ietf:rfc:3986",
+    "value": "{{urn_uuid}}"
+  },
+  "status": "current",
+  "docStatus": "final",
+  "type": {
+    "coding": {
+      "system": "http://hl7.org/fhir/ValueSet/c80-doc-typecodes",
+      "code": "74264-3" // verify this
+    },
+    "text": "HIV summary registry report Document"
+  },
+  "class": {
+    "coding": {
+      "system": "http://hl7.org/fhir/ValueSet/c80-doc-typecodes",
+      "code": "47045-0" // verify this
+    },
+    "text": "Study report Document"
+  },
+  "subject": {
+    "reference": "Patient/xyz"
+  },
+  "created": "{{currentDate}}",
+  "indexed": "{{currentDate}}",
+  "author": [
+    {
+    "reference": "Practitioner/xyz"
+    }
+  ],
+  "content": {
+    "attachment": {
+      "contentType": "application/json+fhir", // now application/fhir+json
+      "data": "{{base64Document}}",
+      "hash": "{{documentHash}}",
+      "title": "CBS event report",
+      "creation": "{{currentDate}}"
+    },
+    "format": {
+      "system": "",
+      "code": "",
+      "display": "FHIR Document" // find a code for this
+      }
+  }
+}
