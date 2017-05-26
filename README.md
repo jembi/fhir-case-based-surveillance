@@ -1,4 +1,4 @@
-# CBS event using MHD
+# CBS events using MHD
 
 To store a case-based surveillance event we send a **FHIR transaction bundle** to Hearth containing 3 things and some extras:
 
