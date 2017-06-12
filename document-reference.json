@@ -33,7 +33,7 @@
   "content": {
     "attachment": {
       "contentType": "application/json+fhir", // now application/fhir+json
-      "data": "{{base64Document}}",
+      "url": "Binary/xyz",
       "hash": "{{documentHash}}",
       "title": "CBS event report",
       "creation": "{{currentDate}}"

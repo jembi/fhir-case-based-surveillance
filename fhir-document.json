@@ -40,16 +40,60 @@
         "section": {
           "entry": [
             {
-              "title": "",
-              "text": "",
+              "title": "CBS Event",
+              "text": "CBS Event",
               "reference": "urn:uuid:xxx" // reference to one or more of the below
             }
           ]
         }
       }
     },
-    // section entry references
+    // section entry references, each event is made up of an Encounter and 0 or more observations
+
+    // The encounter template
     {
+      "fullUrl": "urn:uuid:<uuid>", // use this to refer to the resource before it's created
+      "resource": {
+        "resourceType": "Encounter",
+        "status": "finished",
+        "class": {
+          "system": "http://hl7.org/fhir/v3/ActCode",
+          "code": "HIVAIDS",
+          "display": "HIV-AIDS program"
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hearth.org/cbs/event-types",
+                "code": "linakge-to-care", // values = 'linake-to-care', 'hiv-confirmation', 'cd4-count', 'viral-load'
+                "display": "Linkage to Care CBS event" // change this per event to
+              }
+            ]
+          }
+        ],
+        "period": {
+          "start": "",
+          "end": ""
+        },
+        "location": [
+          {
+            "location": {
+              "display": ""
+            }
+          }
+        ],
+        "subject": {
+          "reference": "Patient/xyz"
+        }
+      }
+    },
+
+    // Below are observations for each event that should be linked to an encounter
+
+    // HIV confirmation event
+    {
+      "fullUrl": "urn:uuid:<uuid>", // use this to refer to the resource before it's created
       "resource": { // HIV positive test
         "resourceType": "Observation",
         "identifier": [
@@ -76,6 +120,56 @@
         "subject": {
           "reference": "Patient/xyz"
         },
+        "encounter": {
+          "reference": "Encounter/xyz"
+        },
+        "effectiveDateTime": "{{testDate}}",
+        "issued": "{{currrentDateTime}}",
+        "performer": [
+          {
+            "reference": "Practitioner/xyz"
+          }
+        ],
+        "valueCodeableConcept": {
+          "coding": {
+            "system": "http://loinc.org",
+            "code": "LA6576-8"
+          },
+          "text": "Positive"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:<uuid>", // use this to refer to the resource before it's created
+      "resource": { // Partner HIV status
+        "resourceType": "Observation",
+        "identifier": [
+          {
+            "system": "urn:ietf:rfc:3986",
+            "value": "{{urn_uuid}}"
+          }
+        ],
+        "status": "final",
+        "category": {
+          "coding": {
+            "system": "http://hl7.org/fhir/ValueSet/observation-category",
+            "code": "laboratory"
+          },
+          "text": "laboratory",
+        },
+        "code": {
+          "coding": {
+            "system": "http://hearth.org/cbs",
+            "code": "partner-hiv-status" // Partners HIV status
+          },
+          "text": "Partners HIV status"
+        },
+        "subject": {
+          "reference": "Patient/xyz"
+        },
+        "encounter": {
+          "reference": "Encounter/xyz"
+        },
         "effectiveDateTime": "{{testDate}}",
         "issued": "{{currrentDateTime}}",
         "performer": [
@@ -93,7 +187,9 @@
       }
     },
 
+    // CD4 count event
     {
+      "fullUrl": "urn:uuid:<uuid>", // use this to refer to the resource before it's created
       "resource": { // CD4 count
         "resourceType": "Observation",
         "identifier": [
@@ -120,6 +216,9 @@
         "subject": {
           "reference": "Patient/xyz"
         },
+        "encounter": {
+          "reference": "Encounter/xyz"
+        },
         "effectiveDateTime": "{{testDate}}",
         "issued": "{{currrentDateTime}}",
         "performer": [
@@ -134,7 +233,9 @@
       }
     },
 
+    // Viral load event
     {
+      "fullUrl": "urn:uuid:<uuid>", // use this to refer to the resource before it's created
       "resource": { // Viral load
         "resourceType": "Observation",
         "identifier": [
@@ -161,6 +262,9 @@
         "subject": {
           "reference": "Patient/xyz"
         },
+        "encounter": {
+          "reference": "Encounter/xyz"
+        },
         "effectiveDateTime": "{{testDate}}",
         "issued": "{{currrentDateTime}}",
         "performer": [
@@ -175,7 +279,9 @@
       }
     },
 
+    // First ART event
     {
+      "fullUrl": "urn:uuid:<uuid>", // use this to refer to the resource before it's created
       "resource": { // First antiretroviral
         "resourceType": "MedicationOrder",
         "identifier": [
@@ -189,6 +295,9 @@
         "patient": {
           "reference": "Patient/xyz"
         },
+        "encounter": {
+          "reference": "Encounter/xyz"
+        },
         "medicationCodeableConcept": {
           "coding": {
             "system": "", // ??
@@ -199,7 +308,9 @@
       }
     },
 
+    // Death event
     {
+      "fullUrl": "urn:uuid:<uuid>", // use this to refer to the resource before it's created
       "resource": { // Death
         "resourceType": "Observation",
         "identifier": [
@@ -225,6 +336,9 @@
         },
         "subject": {
           "reference": "Patient/xyz"
+        },
+        "encounter": {
+          "reference": "Encounter/xyz"
         },
         "effectiveDateTime": "{{testDate}}",
         "issued": "{{currrentDateTime}}",
